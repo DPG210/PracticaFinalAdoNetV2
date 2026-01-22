@@ -59,13 +59,15 @@ namespace PracticaFinalAdoNetV2
 
         private async void btnUpdateEmpleado_Click(object sender, EventArgs e)
         {
-
+            
+            string apellidoViejo = this.lstEmpleados.SelectedItem.ToString();
+            Empleado emp = await this.repo.GetDataEmpleadoAsync(apellidoViejo);
             string apellido = this.txtEmpApellido.Text.ToString();
             string oficio = this.txtEmpOficio.Text.ToString();
             int salario = int.Parse(this.txtEmpSalario.Text.ToString());
             
-            await this.repo.UpdateEmpleadoAsync(apellido,oficio, salario);
-            
+            await this.repo.UpdateEmpleadoAsync(apellido,oficio, salario, apellidoViejo);
+            this.LoadEmpleados(emp.Dept_num);
         }
 
         private async void cmbDepartamentos_SelectedIndexChanged(object sender, EventArgs e)

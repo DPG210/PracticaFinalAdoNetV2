@@ -141,6 +141,7 @@ namespace PracticaFinalAdoNetV2.Repositories
                 string oficio = this.reader["oficio"].ToString();
                 int salario = int.Parse(this.reader["salario"].ToString());
                 int numero = int.Parse(this.reader["dept_no"].ToString());
+                int numEmp = int.Parse(this.reader["Emp_no"].ToString());
                 empelado.Apellido = apellido;
                 empelado.Oficio = oficio;
                 empelado.Salario = salario;
@@ -152,15 +153,17 @@ namespace PracticaFinalAdoNetV2.Repositories
             return empelado;
         }
 
-        public async Task UpdateEmpleadoAsync(string apellido, string oficio, int salario)
+        public async Task UpdateEmpleadoAsync(string apellido, string oficio, int salario, string apellidoViejo)
         {
-            string sql = "update Emp set apellido=@apellido, oficio=@oficio, salario=@salario where apellido=@apellido";
+            string sql = "update Emp set apellido=@apellido, oficio=@oficio, salario=@salario where apellido=@apellidoviejo";
             SqlParameter pamApe = new SqlParameter("@apellido", apellido);
             this.com.Parameters.Add(pamApe);
             SqlParameter pamOfi = new SqlParameter("@oficio", oficio);
             this.com.Parameters.Add(pamOfi);
             SqlParameter pamSalario = new SqlParameter("@salario", salario);
             this.com.Parameters.Add(pamSalario);
+            SqlParameter pamApeViejo = new SqlParameter("@apellidoviejo", apellidoViejo);
+            this.com.Parameters.Add(pamApeViejo);
             this.com.CommandType = CommandType.Text;
             this.com.CommandText = sql;
             await this.cn.OpenAsync();
